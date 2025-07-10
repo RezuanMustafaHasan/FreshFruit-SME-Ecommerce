@@ -1,0 +1,146 @@
+
+            <div class="add-product-container">
+                <div class="add-product-header">
+                    <h2><i class="fas fa-plus-circle"></i> Add New Product</h2>
+                    <a href="/admin-products" class="btn-back">
+                        <i class="fas fa-arrow-left"></i> Back to Products
+                    </a>
+                </div>
+
+                <div class="add-product-card">
+                    <form class="product-form">
+                        <div class="form-row">
+                            <!-- Product Images Section -->
+                            <div class="form-col-left">
+                                <div class="form-section">
+                                    <h5 class="section-title">Product Images</h5>
+                                    <div class="image-upload-area">
+                                        <div class="upload-placeholder">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p>Drag & drop images here or click to browse</p>
+                                            <input type="file" id="productImages" multiple accept="image/*" hidden>
+                                        </div>
+                                    </div>
+                                    <div class="image-preview-grid">
+                                        <!-- Image previews will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product Details Section -->
+                            <div class="form-col-right">
+                                <div class="form-section">
+                                    <h5 class="section-title">Product Information</h5>
+                                    
+                                    <div class="form-group-row">
+                                        <div class="form-group form-group-large">
+                                            <label for="productName" class="form-label">Product Name *</label>
+                                            <input type="text" class="form-control" id="productName" placeholder="Enter product name" required>
+                                        </div>
+                                        <div class="form-group form-group-small">
+                                            <label for="productSKU" class="form-label">SKU</label>
+                                            <input type="text" class="form-control" id="productSKU" placeholder="Auto-generated">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="productDescription" class="form-label">Description</label>
+                                        <textarea class="form-control" id="productDescription" rows="4" placeholder="Enter product description"></textarea>
+                                    </div>
+
+                                    <div class="form-group-row">
+                                        <div class="form-group">
+                                            <label for="productCategory" class="form-label">Category *</label>
+                                            <select class="form-control" id="productCategory" required>
+                                                <option value="">Select category</option>
+                                                <option value="fruits">Fruits</option>
+                                                <option value="vegetables">Vegetables</option>
+                                                <option value="dairy">Dairy</option>
+                                                <option value="meat">Meat & Poultry</option>
+                                                <option value="seafood">Seafood</option>
+                                                <option value="bakery">Bakery</option>
+                                                <option value="beverages">Beverages</option>
+                                                <option value="snacks">Snacks</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="productBrand" class="form-label">Brand</label>
+                                            <input type="text" class="form-control" id="productBrand" placeholder="Enter brand name">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group-row">
+                                        <div class="form-group">
+                                            <label for="productPrice" class="form-label">Price ($) *</label>
+                                            <input type="number" class="form-control" id="productPrice" step="0.01" placeholder="0.00" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="productComparePrice" class="form-label">Compare Price ($)</label>
+                                            <input type="number" class="form-control" id="productComparePrice" step="0.01" placeholder="0.00">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="productCost" class="form-label">Cost ($)</label>
+                                            <input type="number" class="form-control" id="productCost" step="0.01" placeholder="0.00">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group-row">
+                                        <div class="form-group">
+                                            <label for="productWeight" class="form-label">Weight</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" id="productWeight" step="0.01" placeholder="0.00">
+                                                <select class="form-control weight-unit">
+                                                    <option value="kg">kg</option>
+                                                    <option value="g">g</option>
+                                                    <option value="lb">lb</option>
+                                                    <option value="oz">oz</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="productStock" class="form-label">Stock Quantity *</label>
+                                            <input type="number" class="form-control" id="productStock" placeholder="0" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group-row">
+                                        <div class="form-group">
+                                            <label for="productStatus" class="form-label">Status</label>
+                                            <select class="form-control" id="productStatus">
+                                                <option value="active">Active</option>
+                                                <option value="draft">Draft</option>
+                                                <option value="archived">Archived</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="productTags" class="form-label">Tags</label>
+                                            <input type="text" class="form-control" id="productTags" placeholder="organic, fresh, local (comma separated)">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="productFeatured">
+                                            <label class="form-check-label" for="productFeatured">
+                                                Featured Product
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save"></i> Save Product
+                                        </button>
+                                        <button type="button" class="btn btn-secondary">
+                                            <i class="fas fa-eye"></i> Save & Preview
+                                        </button>
+                                        <button type="reset" class="btn btn-danger">
+                                            <i class="fas fa-times"></i> Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>

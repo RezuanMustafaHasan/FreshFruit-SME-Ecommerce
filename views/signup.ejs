@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body class="simple-auth-body">
+    <%- include('partials/nav') %>
+    <section class="simple-auth-section">
+        
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="simple-auth-header text-center mb-5">
+                        <h1 class="simple-auth-title mt-5">Sign Up</h1>
+                    </div>
+                    <form action="/signup" method="POST" class="needs-validation" novalidate> 
+                    <div class="mb-3"> 
+                        <label for="name" class="form-label">Name</label> 
+                        <input type="text" class="form-control" name="name" required> 
+                        <div class="invalid-feedback">Please enter your name</div> 
+                        <div class="valid-feedback">Looks good!</div> 
+                    </div> 
+                    <div class="mb-3"> 
+                        <label for="username" class="form-label">Username</label> 
+                        <input type="text" class="form-control" name="username" required> 
+                        <div class="invalid-feedback">Please enter a username</div> 
+                        <div class="valid-feedback">Looks good!</div> 
+                    </div> 
+                    <div class="mb-3"> 
+                        <label for="email" class="form-label">Email</label> 
+                        <input type="email" class="form-control" name="email" required> 
+                        <div class="invalid-feedback">Please enter a valid email</div> 
+                    </div> 
+                    <div class="mb-3"> 
+                        <label for="address" class="form-label">Address</label> 
+                        <input type="text" class="form-control" name="address" required> 
+                        <div class="invalid-feedback">Please enter your address</div> 
+                        <div class="valid-feedback">Looks good!</div> 
+                    </div> 
+                    <div class="mb-3"> 
+                        <label for="phone" class="form-label">Phone</label> 
+                        <input type="text" class="form-control" name="phone" required> 
+                        <div class="invalid-feedback">Please enter a phone number</div> 
+                        <div class="valid-feedback">Looks good!</div> 
+                    </div> 
+                    <div class="mb-3"> 
+                        <label for="password" class="form-label">Password</label> 
+                        <input type="password" class="form-control" name="password" required> 
+                        <div class="invalid-feedback">Please enter a password</div> 
+                    </div> 
+                    <button type="submit" class="btn simple-auth-btn w-100 mb-4">Sign Up</button> 
+                </form> 
+
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="container mt-5">
+        <div class="row mt-3"> 
+            <div class="col-6 offset-3"> 
+                            </div> 
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <%- include('includes/sidebar.ejs') %>
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navigation -->
+        <%- include('includes/navbar.ejs') %>
+        <div class="content-area">
+            <div class="products-list-card">    
+                <div class="products-grid">
+                    <%for (let product of allProducts) { %>
+                    <div class="product-item">
+                        <div class="product-image">
+                            <img src="<%= product.image.url %>" alt="<%= product.name %>">
+                        </div>
+                        <div class="product-info">
+                            <h6><%= product.name %></h6>
+                            <p class="product-description"><%= product.description %></p>
+                            <div class="product-details">
+                                <span class="product-price">&#2547;<%= product.price %></span>
+                                <span class="product-stock"><%= product.stock %> in stock</span>
+                            </div>
+                            <div class="product-meta">
+                                <span class="product-category"><%= product.category %></span>
+                            </div>
+                            <div class="product-actions mt-2">
+                                <a href="/admin/edit-product/<%= product._id %>" class="btn btn-sm btn-warning me-2">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                            <!-- <div class="product-status active">Active</div>
+                        </div>
+                        <div class="product-info">
+                            <h6>Fresh Red Apples</h6>
+                            <p class="product-description">Premium quality organic apples</p>
+                            <div class="product-details">
+                                <span class="product-price">$4.99</span>
+                                <span class="product-stock">45 in stock</span>
+                            </div>
+                            <div class="product-meta">
+                                <span class="product-sku">SKU: APL-001</span>
+                                <span class="product-category">Fruits</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    Product Item 3 -->
+                    
+
+                    <!-- Product Item 4 -->
+                    
+
+                    <!-- Product Item 5 -->
+                    
+
+                    
+
+                
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

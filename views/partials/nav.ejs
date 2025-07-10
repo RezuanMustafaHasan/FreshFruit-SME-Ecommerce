@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-gradient-primary fixed-top shadow">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-3" href="/">
+            <i class="fas fa-apple-alt text-warning me-2"></i>FresMart
+        </a>
+        <!-- Super Cool Search Bar -->
+        <div class="navbar-search mx-auto d-none d-lg-flex">
+            <div class="search-container position-relative">
+                <input type="text" class="form-control search-input" placeholder="Search for fresh fruits..." aria-label="Search">
+                <button class="btn search-btn position-absolute" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+                <div class="search-glow"></div>
+            </div>
+        </div>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Mobile Search Bar -->
+            <div class="navbar-search-mobile d-lg-none mb-3">
+                <div class="search-container position-relative">
+                    <input type="text" class="form-control search-input" placeholder="Search for fresh fruits..." aria-label="Search">
+                    <button class="btn search-btn position-absolute" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div class="search-glow"></div>
+                </div>
+            </div>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/shop">Shop</a>
+                <a class="nav-link position-relative" href="/cart">
+                    <i class="fas fa-shopping-cart"></i> Cart<!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark"></span> -->
+                </a>
+                <a class="nav-link" href="/about">About</a>
+                <% if(!currUser) { %>
+                    <a class="nav-link" href="/signup">Sign Up</a>
+                    <a class="nav-link" href="/login">Login</a>
+                    <% } else { %>
+                        <a class="nav-link" href="/logout">Logout</a>
+                    <% } %>
+            </div>
+        </div>
+    </div>
+</nav>
+<% success %>
+<% error %>

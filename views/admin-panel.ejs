@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Fruit Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin-panel.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4><i class="fas fa-apple-alt"></i> Fruit Store Admin</h4>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="active">
+                <a href="#dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="#products"><i class="fas fa-box"></i> Products</a>
+            </li>
+            <li>
+                <a href="#orders"><i class="fas fa-shopping-cart"></i> Orders</a>
+            </li>
+            <li>
+                <a href="#customers"><i class="fas fa-users"></i> Customers</a>
+            </li>
+            <li>
+                <a href="#analytics"><i class="fas fa-chart-bar"></i> Analytics</a>
+            </li>
+            <li>
+                <a href="#inventory"><i class="fas fa-warehouse"></i> Inventory</a>
+            </li>
+            <li>
+                <a href="#settings"><i class="fas fa-cog"></i> Settings</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h5 class="page-title">Dashboard</h5>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <div class="admin-profile">
+                    <img src="https://via.placeholder.com/40" alt="Admin">
+                    <span>Admin User</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Dashboard Content -->
+        <div class="content-area">
+            <!-- Stats Cards -->
+            <div class="row mb-4">
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="stats-card">
+                        <div class="card-body">
+                            <div class="stats-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stats-info">
+                                <h3>$12,345</h3>
+                                <p>Total Revenue</p>
+                                <span class="stats-change positive">+12.5%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="stats-card">
+                        <div class="card-body">
+                            <div class="stats-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stats-info">
+                                <h3>1,234</h3>
+                                <p>Total Orders</p>
+                                <span class="stats-change positive">+8.2%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="stats-card">
+                        <div class="card-body">
+                            <div class="stats-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stats-info">
+                                <h3>567</h3>
+                                <p>Total Customers</p>
+                                <span class="stats-change positive">+15.3%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="stats-card">
+                        <div class="card-body">
+                            <div class="stats-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="stats-info">
+                                <h3>89</h3>
+                                <p>Total Products</p>
+                                <span class="stats-change negative">-2.1%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts and Tables Row -->
+            <div class="row">
+                <!-- Sales Chart -->
+                <div class="col-xl-8 col-lg-7">
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h5>Sales Overview</h5>
+                            <div class="chart-controls">
+                                <select class="form-select">
+                                    <option>Last 7 days</option>
+                                    <option>Last 30 days</option>
+                                    <option>Last 3 months</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-placeholder">
+                                <canvas id="salesChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Products -->
+                <div class="col-xl-4 col-lg-5">
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h5>Top Products</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="product-list">
+                                <div class="product-item">
+                                    <img src="https://via.placeholder.com/50" alt="Apple">
+                                    <div class="product-info">
+                                        <h6>Fresh Apples</h6>
+                                        <p>234 sold</p>
+                                    </div>
+                                    <div class="product-sales">$1,234</div>
+                                </div>
+                                <div class="product-item">
+                                    <img src="https://via.placeholder.com/50" alt="Orange">
+                                    <div class="product-info">
+                                        <h6>Juicy Oranges</h6>
+                                        <p>189 sold</p>
+                                    </div>
+                                    <div class="product-sales">$945</div>
+                                </div>
+                                <div class="product-item">
+                                    <img src="https://via.placeholder.com/50" alt="Banana">
+                                    <div class="product-info">
+                                        <h6>Ripe Bananas</h6>
+                                        <p>156 sold</p>
+                                    </div>
+                                    <div class="product-sales">$678</div>
+                                </div>
+                                <div class="product-item">
+                                    <img src="https://via.placeholder.com/50" alt="Mango">
+                                    <div class="product-info">
+                                        <h6>Sweet Mangoes</h6>
+                                        <p>123 sold</p>
+                                    </div>
+                                    <div class="product-sales">$567</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Orders Table -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="table-card">
+                        <div class="card-header">
+                            <h5>Recent Orders</h5>
+                            <button class="btn btn-primary btn-sm">
+                                <i class="fas fa-plus"></i> New Order
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Customer</th>
+                                            <th>Product</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
+                                            <th>Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>#ORD-001</td>
+                                            <td>John Doe</td>
+                                            <td>Fresh Apples</td>
+                                            <td>$25.99</td>
+                                            <td><span class="status-badge delivered">Delivered</span></td>
+                                            <td>2024-01-15</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#ORD-002</td>
+                                            <td>Jane Smith</td>
+                                            <td>Juicy Oranges</td>
+                                            <td>$18.50</td>
+                                            <td><span class="status-badge pending">Pending</span></td>
+                                            <td>2024-01-14</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#ORD-003</td>
+                                            <td>Mike Johnson</td>
+                                            <td>Ripe Bananas</td>
+                                            <td>$12.75</td>
+                                            <td><span class="status-badge processing">Processing</span></td>
+                                            <td>2024-01-13</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Sidebar toggle
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        });
+
+        // Sample chart
+        const ctx = document.getElementById('salesChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Sales',
+                    data: [1200, 1900, 3000, 5000, 2000, 3000, 4500],
+                    borderColor: '#4CAF50',
+                    backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+</body>
+</html>

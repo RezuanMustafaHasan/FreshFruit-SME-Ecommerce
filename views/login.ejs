@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body class="simple-auth-body">
+    <%- include('partials/nav') %>
+    
+    <!-- Simple Auth Section -->
+    <section class="simple-auth-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                   
+                    <form action="/login" method="POST" class="simple-auth-form">
+                        <div class="form-group mb-4">
+                            <label for="username" class="simple-form-label">Username</label>
+                            <input type="text" class="form-control simple-form-input" id="username" name="username" placeholder="Enter your username" required>
+                        </div>
+                        
+                        <div class="form-group mb-4">
+                            <label for="password" class="simple-form-label">Password</label>
+                            <input type="password" class="form-control simple-form-input" id="password" name="password" placeholder="Enter your password" required>
+                        </div>
+                        
+                        <div class="form-options mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input simple-checkbox" type="checkbox" id="remember" name="remember">
+                                <label class="form-check-label simple-check-label" for="remember">
+                                    Remember me
+                                </label>
+                            </div>
+                            <a href="/forgot-password" class="simple-link">Forgot Password?</a>
+                        </div>
+                        
+                        <button type="submit" class="btn simple-auth-btn w-100 mb-4">
+                            Sign In
+                        </button>
+                        
+                        <div class="simple-auth-footer text-center">
+                            <p class="mb-0">Don't have an account? <a href="/signup" class="simple-link fw-bold">Sign Up</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include('partials/footer') %>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

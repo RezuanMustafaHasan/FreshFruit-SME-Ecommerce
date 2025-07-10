@@ -1,0 +1,160 @@
+if(process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+} 
+const express = require('express');
+const app = express();
+const Review = require('./models/review');
+const path = require('path');
+const mongoose = require('mongoose');
+const wrapAsync = require('./utils/wrapAsync');
+const ExpressError = require('./utils/ExpressError.js');
+const session = require('express-session');
+const flash = require('connect-flash');
+const passport = require('passport');
+const User = require('./models/user');
+const LocalStrategy = require('passport-local');
+const methodOverride = require('method-override');
+const Product = require('./models/product.js');
+app.use(methodOverride('_method'));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+const ejsMate = require('ejs-mate');
+app.engine('ejs', ejsMate);
+const { saveRedirectUrl } = require('./middlewares.js');
+
+const MONGO_URL = 'mongodb://127.0.0.1:27017/CVIT-SME';
+
+const sessionOptions = {
+    secret: "mysupersecretstring",
+    resave: false,
+    saveUninitialized: false, // Changed to false
+    cookie:{
+        httpOnly: true,
+        expires: Date.now() + 7 * 1000 * 60 * 60 * 24, // 7 days
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+        secure: false // Ensure this is false for development
+    }
+};
+
+main()
+.then(()=>{
+    console.log("Connected to DB");
+})
+.catch(err=>{
+    console.log(err);
+});
+
+async function main() {
+    await mongoose.connect(MONGO_URL);
+}
+
+const adminRouter = require('./routes/admin');
+
+// Session and Passport setup
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+// CRITICAL: This middleware MUST be after passport setup
+app.use((req, res, next) => {
+    console.log('Middleware - req.user:', req.user); // Debug log
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    res.locals.currUser = req.user; 
+    console.log('Middleware - res.locals.currUser:', res.locals.currUser); // Debug log
+    next();
+});
+
+// Routes AFTER middleware
+app.use('/admin', adminRouter);
+
+app.get('/', (req, res) => {
+    console.log('Home route - currUser:', res.locals.currUser); // Debug log
+    res.render('index');
+});
+
+app.get('/signup', (req, res) => {
+    res.render('signup');
+});
+
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
+app.get('/shop', async (req, res) => {
+    console.log('Shop route - currUser:', res.locals.currUser); // Debug log
+    const allProducts = await Product.find({});
+    res.render('shop', { allProducts });
+});
+
+app.get("/cart", async (req, res) =>{
+    res.render("cart");
+})
+
+app.post("/signup", wrapAsync(async (req, res, next) => {
+    try{
+        console.log(req.body);
+        const { name, username, email, address, phone, password  } = req.body;
+        const newUser = new User({ name, username, email, address, phone });
+        const registeredUser = await User.register(newUser, password);
+        console.log('Registered user:', registeredUser);
+        req.login(registeredUser, (err) => {
+            if (err) {
+                return next(err);
+            }
+            req.flash('success', 'Welcome to FruitMart!');
+            console.log('User Signed Up successfully');
+            res.redirect('/shop');
+        });
+        
+    } catch (e) {
+        console.log('Signup error:', e);
+        req.flash('error', e.message);
+        res.redirect('/signup');
+    }
+}));
+
+app.post("/login", saveRedirectUrl, passport.authenticate("local",{failureRedirect: '/login', failureFlash: true}), (req, res) => {
+    req.flash('success', 'Welcome back!');
+    console.log("User Logged In successfully");
+    console.log('Login - req.user:', req.user);
+    console.log('Login - req.session:', req.session);
+    res.redirect(res.locals.redirectUrl || '/shop');
+});
+
+app.post('/logout', (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        req.flash('success', 'You are logged out!');
+        res.redirect('/');
+    });
+});
+
+/* For live update */
+const livereload = require("livereload");
+const connectLiveReload = require("connect-livereload");
+
+const liveReloadServer = livereload.createServer();
+liveReloadServer.watch(path.join(__dirname, 'views'));
+liveReloadServer.watch(path.join(__dirname, 'public'));
+
+liveReloadServer.server.once("connection", () => {
+  setTimeout(() => {
+    liveReloadServer.refresh("/");
+    liveReloadServer.refresh("/admin");
+  }, 100);
+});
+
+app.use(connectLiveReload());
+
+app.listen(3000, () => console.log('Server running on port 3000'));

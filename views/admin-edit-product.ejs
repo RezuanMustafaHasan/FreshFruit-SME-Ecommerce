@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product - Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <%- include('includes/sidebar.ejs') %>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navigation -->
+        <%- include('includes/navbar.ejs') %>
+
+        <!-- Edit Product Content -->
+        <div class="content-area">
+            <div class="add-product-container">
+                <!-- Header Section -->
+                <div class="add-product-header">
+                    <h2><i class="fas fa-edit"></i>Edit Product</h2>
+                    <a href="/admin/products" class="btn-back">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Products
+                    </a>
+                </div>
+
+                <!-- Form Card -->
+                <div class="add-product-card">
+                    <form action="/admin/edit-product/<%= product._id %>?_method=PUT" method="POST" class="product-form needs-validation" required novalidate enctype="multipart/form-data">
+                        <div class="form-row">
+                            <!-- Left Column - Product Details -->
+                            <div class="form-col-left">
+                                <div class="form-section">
+                                    <h3 class="section-title">
+                                        <i class="fas fa-info-circle"></i>
+                                        Product Information
+                                    </h3>
+                                    
+                                    <div class="form-group">
+                                        <label for="name" class="form-label">
+                                            <i class="fas fa-tag"></i>
+                                            Product Name
+                                        </label>
+                                        <input type="text" id="name" class="form-control" placeholder="Enter a catchy product name" name="product[name]" value="<%= product.name %>" required>
+                                        <div class="form-feedback">
+                                            <div class="valid-feedback"><i class="fas fa-check-circle"></i> Perfect!</div>
+                                            <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Please enter a product name</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="category" class="form-label">
+                                            <i class="fas fa-folder"></i>
+                                            Category
+                                        </label>
+                                        <input type="text" id="category" class="form-control" placeholder="e.g., Fruits, Vegetables, Organic" name="product[category]" value="<%= product.category %>" required>
+                                        <div class="form-feedback">
+                                            <div class="valid-feedback"><i class="fas fa-check-circle"></i> Great choice!</div>
+                                            <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Please select a category</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="form-label">
+                                            <i class="fas fa-align-left"></i>
+                                            Description
+                                        </label>
+                                        <textarea id="description" class="form-control" name="product[description]" placeholder="Describe your product in detail..." rows="4" required><%= product.description %></textarea>
+                                        <div class="form-feedback">
+                                            <div class="valid-feedback"><i class="fas fa-check-circle"></i> Excellent description!</div>
+                                            <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Please provide a description</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-section">
+                                    <h3 class="section-title">
+                                        <i class="fas fa-dollar-sign"></i>
+                                        Pricing & Inventory
+                                    </h3>
+                                    
+                                    <div class="form-group-row">
+                                        <div class="form-group">
+                                            <label for="price" class="form-label">
+                                                <i class="fas fa-money-bill-wave"></i>
+                                                Price
+                                            </label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input id="price" class="form-control" placeholder="0.00" name="product[price]" value="<%= product.price %>" required>
+                                            </div>
+                                            <div class="form-feedback">
+                                                <div class="valid-feedback"><i class="fas fa-check-circle"></i> Price set!</div>
+                                                <div type="number" class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Please enter a price</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="unit" class="form-label">
+                                                <i class="fas fa-weight"></i>
+                                                Unit
+                                            </label>
+                                            <input type="text" id="unit" class="form-control" placeholder="kg, lb, piece, etc." name="product[unit]" value="<%= product.unit %>" required>
+                                            <div class="form-feedback">
+                                                <div class="valid-feedback"><i class="fas fa-check-circle"></i> Unit defined!</div>
+                                                <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Please specify a unit</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="stock" class="form-label">
+                                            <i class="fas fa-boxes"></i>
+                                            Stock Quantity
+                                        </label>
+                                        <input type="number" id="stock" class="form-control" placeholder="100" name="product[stock]" min="0" value="<%= product.stock %>" required>
+                                        <div class="form-feedback">
+                                            <div class="valid-feedback"><i class="fas fa-check-circle"></i> Stock quantity set!</div>
+                                            <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Please enter stock quantity</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column - Image Upload -->
+                            <div class="form-col-right">
+                                <div class="form-section">
+                                    <h3 class="section-title">
+                                        <i class="fas fa-images"></i>
+                                        Product Images
+                                    </h3>
+                                    
+                                    <div class="current-image mb-3">
+                                        <h5>Current Image:</h5>
+                                        <img src="<%= product.image.url %>" alt="<%= product.name %>" class="img-fluid rounded" style="max-height: 200px;">
+                                    </div>
+                                    
+                                    <div class="image-upload-area">
+                                        <div class="upload-placeholder" onclick="document.getElementById('imageInput').click()">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p>Click to upload new product image</p>
+                                            <small>Supports: JPG, PNG, WebP (Max: 5MB)</small>
+                                        </div>
+                                        <input type="file" id="imageInput" class="form-control d-none" name="product[image]" accept="image/*">
+                                        <div class="image-preview-grid" id="imagePreview"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Product Preview Card -->
+                                <div class="product-preview-card">
+                                    <h4 class="preview-title">
+                                        <i class="fas fa-eye"></i>
+                                        Live Preview
+                                    </h4>
+                                    <div class="preview-content">
+                                        <div class="preview-image">
+                                            <img src="<%= product.image.url %>" alt="<%= product.name %>" class="img-fluid">
+                                        </div>
+                                        <div class="preview-details">
+                                            <h5 class="preview-name"><%= product.name %></h5>
+                                            <p class="preview-category"><%= product.category %></p>
+                                            <div class="preview-price">$<%= product.price %> / <%=product.unit%></div>
+                                            <div class="preview-stock">Stock: <%= product.stock %> units</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i>
+                                Update Product
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- Delete Section -->
+                    <div class="delete-section mt-4 p-3 border border-danger rounded">
+                        <h5 class="text-danger"><i class="fas fa-exclamation-triangle"></i> Danger Zone</h5>
+                        <p class="text-muted">Once you delete this product, there is no going back. Please be certain.</p>
+                        <form action="/admin/delete-product/<%= product._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to delete this product? This action cannot be undone.')">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash"></i>
+                                Delete Product
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+</head>
+<body>
+    <%- include('partials/nav') %>
+    
+    <!-- Cart Hero Section -->
+    <section class="hero-section">
+        <div class="hero-overlay">
+            <div class="container">
+                <div class="row align-items-center" style="min-height: 40vh;">
+                    <div class="col-lg-8 mx-auto text-center">
+                        <div class="hero-content text-white">
+                            <h1 class="display-3 fw-bold mb-4 animate-fade-in">
+                                Your <span class="text-warning">Shopping Cart</span>
+                            </h1>
+                            <p class="lead mb-4 fs-5">Review your selected fresh fruits</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Cart Content -->
+    <div class="container cart-container my-5">
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-tabs mb-4" id="cartTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="current-cart-tab" data-bs-toggle="tab" data-bs-target="#current-cart" type="button" role="tab">
+                    <i class="fas fa-shopping-cart me-2"></i>Current Cart (<%= orders.length %>)
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pending-orders-tab" data-bs-toggle="tab" data-bs-target="#pending-orders" type="button" role="tab">
+                    <i class="fas fa-clock me-2"></i>Pending Orders (<%= pendingOrders.length %>)
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="delivered-orders-tab" data-bs-toggle="tab" data-bs-target="#delivered-orders" type="button" role="tab">
+                    <i class="fas fa-check-circle me-2"></i>Delivered Orders (<%= deliveredOrders.length %>)
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="cartTabsContent">
+            <!-- Current Cart Tab -->
+            <div class="tab-pane fade show active" id="current-cart" role="tabpanel">
+                <% if (orders.length === 0) { %>
+                    <div class="text-center py-5">
+                        <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                        <h3 class="text-muted">Your cart is empty</h3>
+                        <p class="text-muted mb-4">Add some fresh fruits to get started!</p>
+                        <a href="/shop" class="btn btn-primary btn-lg">
+                            <i class="fas fa-plus me-2"></i>Add More Items
+                        </a>
+                    </div>
+                <% } else { %>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body p-4">
+                                    <h4 class="card-title mb-4"><i class="fas fa-shopping-cart me-2"></i>Cart Items</h4>
+                                    <% 
+                                        let totalAmount = 0;
+                                        let totalQuantity = 0;
+                                    %>
+                                    <% for (let order of orders) { %>
+                                        <% 
+                                            const itemTotal = order.product.price * order.quantity;
+                                            totalAmount += itemTotal;
+                                            totalQuantity += order.quantity;
+                                        %>
+                                        <div class="cart-item border-bottom pb-3 mb-3">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2">
+                                                    <img src="<%= order.product.image.url %>" 
+                                                         alt="<%= order.product.name %>" 
+                                                         class="img-fluid rounded"
+                                                         style="height: 100px; width: 100px; object-fit: cover;">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h5 class="mb-1"><%= order.product.name %></h5>
+                                                    <p class="text-muted mb-2"><%= order.product.description %></p>
+                                                    <span class="badge bg-primary"><%= order.product.category %></span>
+                                                    <div class="mt-2">
+                                                        <small class="text-muted">
+                                                            Stock: <span class="<%= order.product.stock > 10 ? 'text-success' : order.product.stock > 0 ? 'text-warning' : 'text-danger' %>">
+                                                                <%= order.product.stock %> available
+                                                            </span>
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 text-end">
+                                                    <div class="mb-2">
+                                                        <span class="h5 text-primary">$<%= order.product.price.toFixed(2) %></span>
+                                                        <small class="text-muted d-block">per item</small>
+                                                    </div>
+                                                    <div class="mb-2">
+                                                        <span class="badge bg-warning text-dark fs-6">Qty: <%= order.quantity %></span>
+                                                    </div>
+                                                    <div>
+                                                        <strong class="text-primary">Total: $<%= itemTotal.toFixed(2) %></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Order Summary -->
+                        <div class="col-lg-4">
+                            <div class="card border-0 shadow-sm sticky-top">
+                                <div class="card-body p-4">
+                                    <h4 class="card-title mb-4"><i class="fas fa-receipt me-2"></i>Order Summary</h4>
+                                    
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <span>Total Items:</span>
+                                        <strong><%= totalQuantity %></strong>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <span>Subtotal:</span>
+                                        <strong>$<%= totalAmount.toFixed(2) %></strong>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <span>Shipping:</span>
+                                        <strong class="text-success">Free</strong>
+                                    </div>
+                                    
+                                    <hr>
+                                    
+                                    <div class="d-flex justify-content-between mb-4">
+                                        <span class="h5">Total:</span>
+                                        <strong class="h5 text-primary">$<%= totalAmount.toFixed(2) %></strong>
+                                    </div>
+                                    
+                                    <form action="/checkout" method="POST" class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-success btn-lg checkout-btn">
+                                            <i class="fas fa-credit-card me-2"></i>Proceed to Checkout
+                                        </button>
+                                    </form>
+                                    
+                                    <div class="d-grid gap-2 mt-3">
+                                        <a href="/shop" class="btn btn-outline-primary">
+                                            <i class="fas fa-plus me-2"></i>Continue Shopping
+                                        </a>
+                                        <button class="btn btn-outline-secondary">
+                                            <i class="fas fa-save me-2"></i>Save for Later
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+
+            <!-- Pending Orders Tab -->
+            <div class="tab-pane fade" id="pending-orders" role="tabpanel">
+                <% if (pendingOrders.length === 0) { %>
+                    <div class="text-center py-5">
+                        <i class="fas fa-clock fa-3x text-muted mb-3"></i>
+                        <h3 class="text-muted">No pending orders</h3>
+                        <p class="text-muted mb-4">Your pending orders will appear here after checkout.</p>
+                    </div>
+                <% } else { %>
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h4 class="card-title mb-4"><i class="fas fa-clock me-2"></i>Pending Orders</h4>
+                            <% for (let order of pendingOrders) { %>
+                                <% if (order.product) { %>
+                                    <div class="cart-item border-bottom pb-3 mb-3">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-2">
+                                                <img src="<%= order.product.image ? order.product.image.url : 'https://via.placeholder.com/80x80?text=No+Image' %>" 
+                                                     alt="<%= order.product.name || 'Product' %>" 
+                                                     class="img-fluid rounded"
+                                                     style="height: 80px; width: 80px; object-fit: cover;">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="mb-1"><%= order.product.name || 'Product Name' %></h5>
+                                                <p class="text-muted mb-2"><%= order.product.description || 'No description' %></p>
+                                                <span class="badge bg-warning">Pending</span>
+                                            </div>
+                                            <div class="col-md-4 text-end">
+                                                <div class="mb-2">
+                                                    <span class="h6">$<%= (order.product.price || 0).toFixed(2) %></span>
+                                                    <small class="text-muted d-block">per item</small>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <span class="badge bg-info text-dark">Qty: <%= order.quantity %></span>
+                                                </div>
+                                                <div>
+                                                    <strong>Total: $<%= ((order.product.price || 0) * order.quantity).toFixed(2) %></strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% } else { %>
+                                    <div class="cart-item border-bottom pb-3 mb-3">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-2">
+                                                <img src="https://via.placeholder.com/80x80?text=Deleted" 
+                                                     alt="Product Deleted" 
+                                                     class="img-fluid rounded"
+                                                     style="height: 80px; width: 80px; object-fit: cover;">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="mb-1 text-muted">Product Deleted</h5>
+                                                <p class="text-muted mb-2">This product is no longer available</p>
+                                                <span class="badge bg-danger">Unavailable</span>
+                                            </div>
+                                            <div class="col-md-4 text-end">
+                                                <div class="mb-2">
+                                                    <span class="h6 text-muted">N/A</span>
+                                                    <small class="text-muted d-block">per item</small>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <span class="badge bg-secondary">Qty: <%= order.quantity %></span>
+                                                </div>
+                                                <div>
+                                                    <strong class="text-muted">Total: N/A</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            <% } %>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+
+            <!-- Delivered Orders Tab -->
+            <div class="tab-pane fade" id="delivered-orders" role="tabpanel">
+                <% if (deliveredOrders.length === 0) { %>
+                    <div class="text-center py-5">
+                        <i class="fas fa-check-circle fa-3x text-muted mb-3"></i>
+                        <h3 class="text-muted">No delivered orders</h3>
+                        <p class="text-muted mb-4">Your delivered orders will appear here.</p>
+                    </div>
+                <% } else { %>
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h4 class="card-title mb-4"><i class="fas fa-check-circle me-2"></i>Delivered Orders</h4>
+                            <% 
+                                let deliveredTotal = 0;
+                            %>
+                            <% for (let order of deliveredOrders) { %>
+                                <% if (order.product) { %>
+                                    <% deliveredTotal += ((order.product.price || 0) * order.quantity); %>
+                                    <div class="cart-item border-bottom pb-3 mb-3">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-2">
+                                                <img src="<%= order.product.image ? order.product.image.url : 'https://via.placeholder.com/80x80?text=No+Image' %>" 
+                                                     alt="<%= order.product.name || 'Product' %>" 
+                                                     class="img-fluid rounded"
+                                                     style="height: 80px; width: 80px; object-fit: cover;">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="mb-1"><%= order.product.name || 'Product Name' %></h5>
+                                                <p class="text-muted mb-2"><%= order.product.description || 'No description' %></p>
+                                                <span class="badge bg-success">Delivered</span>
+                                            </div>
+                                            <div class="col-md-4 text-end">
+                                                <div class="mb-2">
+                                                    <span class="h6">$<%= (order.product.price || 0).toFixed(2) %></span>
+                                                    <small class="text-muted d-block">per item</small>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <span class="badge bg-success text-white">Qty: <%= order.quantity %></span>
+                                                </div>
+                                                <div>
+                                                    <strong>Total: $<%= ((order.product.price || 0) * order.quantity).toFixed(2) %></strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% } else { %>
+                                    <div class="cart-item border-bottom pb-3 mb-3">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-2">
+                                                <img src="https://via.placeholder.com/80x80?text=Deleted" 
+                                                     alt="Product Deleted" 
+                                                     class="img-fluid rounded"
+                                                     style="height: 80px; width: 80px; object-fit: cover;">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="mb-1 text-muted">Product Deleted</h5>
+                                                <p class="text-muted mb-2">This product is no longer available</p>
+                                                <span class="badge bg-secondary">Delivered (Deleted)</span>
+                                            </div>
+                                            <div class="col-md-4 text-end">
+                                                <div class="mb-2">
+                                                    <span class="h6 text-muted">N/A</span>
+                                                    <small class="text-muted d-block">per item</small>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <span class="badge bg-secondary">Qty: <%= order.quantity %></span>
+                                                </div>
+                                                <div>
+                                                    <strong class="text-muted">Total: N/A</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            <% } %>
+                            <% if (deliveredOrders.length > 0) { %>
+                                <div class="text-end mt-3">
+                                    <h5 class="text-success">Total Delivered Value: $<%= deliveredTotal.toFixed(2) %></h5>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
