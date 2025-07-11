@@ -31,6 +31,34 @@ A full-stack e-commerce web application built with Node.js, Express, and MongoDB
 - **Styling**: Bootstrap 5, Custom CSS
 - **Development**: Nodemon, LiveReload
 
+## Project Structure
+
+├── models/
+│   ├── admin.js          # Admin user model
+│   ├── deliverd.js       # Delivered orders model
+│   ├── orders.js         # Order model
+│   ├── product.js        # Product model
+│   ├── review.js         # Review model
+│   └── user.js           # User model
+├── routes/
+│   └── admin.js          # Admin routes
+├── views/
+│   ├── partials/         # Reusable EJS components
+│   ├── includes/         # Navigation components
+│   ├── admin-*.ejs       # Admin panel views
+│   ├── index.ejs         # Homepage
+│   ├── shop.ejs          # Product listing
+│   ├── cart.ejs          # Shopping cart
+│   └── *.ejs             # Other views
+├── public/
+│   └── css/              # Stylesheets
+├── utils/
+│   ├── ExpressError.js   # Custom error handling
+│   └── wrapAsync.js      # Async error wrapper
+├── cloudConfig.js        # Cloudinary configuration
+├── middlewares.js        # Custom middleware
+└── server.js             # Main application file
+
 ## 📦 Dependencies
 
 ### Main Dependencies
