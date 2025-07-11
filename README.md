@@ -31,7 +31,7 @@ A full-stack e-commerce web application built with Node.js, Express, and MongoDB
 - **Styling**: Bootstrap 5, Custom CSS
 - **Development**: Nodemon, LiveReload
 
-## Project Structure
+## 📁 Project Structure
 
 ├── models/
 │   ├── admin.js          # Admin user model
